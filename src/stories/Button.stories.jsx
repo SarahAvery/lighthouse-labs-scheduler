@@ -1,36 +1,49 @@
-import React from 'react';
-
-import { Button } from './Button';
+/* eslint-disable import/no-anonymous-default-export */
+import Button from "../components/Button";
 
 export default {
-  title: 'Example/Button',
+  title: "Button",
   component: Button,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  parameters: {
+    backgrounds: {
+      default: "dark",
+      values: [{ name: "dark", value: "#222f3e" }]
+    }
+  }
 };
 
 const Template = (args) => <Button {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
-  label: 'Button',
+export const Base = Template.bind({});
+Base.args = {
+  children: "Base"
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
-};
+export const Confirm = Template.bind({})
+Confirm.args = {
+  confirm: true,
+  children: "Confirm"
+}
 
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  label: 'Button',
-};
+export const Danger = Template.bind({})
+Danger.args = {
+  danger: true,
+  children: "Cancel"
+}
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
-  label: 'Button',
-};
+export const Clickable = Template.bind({})
+Clickable.args = {
+  children: "Clickable",
+}
+Clickable.argTypes = {
+  onClick: { action: "button-clicked"}
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  disabled: true,
+  children: "Disabled",
+}
+Disabled.argTypes = {
+  onClick: { action: "button-clicked"}
+}
