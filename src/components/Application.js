@@ -4,50 +4,7 @@ import DayList from "./DayList";
 import Appointment from "./Appointment";
 import "components/Application.scss";
 
-import { getAppointmentsForDay } from "../helpers/selectors";
-
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       },
-//     },
-//   },
-//   {
-//     id: 3,
-//     time: "3pm",
-//     interview: {
-//       student: "Lydia Johnson",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       },
-//     },
-//   },
-//   {
-//     id: 4,
-//     time: "2pm",
-//     interview: {
-//       student: "Lydia Smith",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       },
-//     },
-//   },
-// ];
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
 const Nav = (props) => {
   return <nav className="sidebar__menu">{props.children}</nav>;
@@ -61,12 +18,21 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     appointments: [],
+    interviewers: [],
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
+
+  const schedule = dailyAppointments.map((appt) => {
+    const interview = getInterview(state, appt.interview);
+    console.log(appt);
+    return (
+      <Appointment key={appt.id} id={appt.id} time={appt.time} interview={interview} interviewers={interviewers} />
+    );
+  });
 
   const setDay = (day) => setState({ ...state, day });
-  // const setDays = (days) => setState((prev) => ({ ...prev, days }));
 
   const baseUrl = "http://localhost:8002/api/";
 
@@ -76,8 +42,12 @@ export default function Application(props) {
       axios.get(`${baseUrl}appointments`),
       axios.get(`${baseUrl}interviewers`),
     ]).then(([days, appointments, interviewers]) => {
-      console.log(days.data, appointments.data);
-      setState((prev) => ({ ...prev, days: days.data, appointments: appointments.data }));
+      setState((prev) => ({
+        ...prev,
+        days: days.data,
+        appointments: appointments.data,
+        interviewers: interviewers.data,
+      }));
     });
   }, []);
 
@@ -92,7 +62,7 @@ export default function Application(props) {
         <Image className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
       </Section>
       <Section className="schedule">
-        {dailyAppointments && dailyAppointments.map((appt) => <Appointment key={appt.id} time={appt.time} {...appt} />)}
+        {schedule}
         <Appointment key="last" time="5pm" />
       </Section>
     </main>
