@@ -1,4 +1,4 @@
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import { getAppointmentsForDay, updateSpots, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 const state = {
   days: [
@@ -7,12 +7,14 @@ const state = {
       name: "Monday",
       appointments: [1, 2, 3],
       interviewers: [1, 3, 5],
+      spots: 0,
     },
     {
       id: 2,
       name: "Tuesday",
       appointments: [4, 5],
       interviewers: [2, 5],
+      spots: 3,
     },
   ],
   appointments: {
@@ -114,4 +116,9 @@ test("getInterviewersForDay returns an empty array when the days data is empty",
 test("getInterviewersForDay returns an empty array when the day is not found", () => {
   const result = getInterviewersForDay(state, "Wednesday");
   expect(result.length).toEqual(0);
+});
+
+test("updateSpots returns number of free spots", () => {
+  const result = updateSpots(state, "Monday");
+  expect(result.days.spots).toBe(2);
 });

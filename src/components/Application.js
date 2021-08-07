@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+// import axios from "axios";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 import "components/Application.scss";
+import useApplicationData from "hooks/useApplicationData";
 
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
@@ -14,42 +15,26 @@ const Image = (props) => <img className={props.className} src={props.src} alt={p
 const Section = (props) => <section className={props.className}>{props.children}</section>;
 
 export default function Application(props) {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: [],
-    interviewers: [],
-  });
+  const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  const interviewers = getInterviewersForDay(state, state.day);
 
   const schedule = dailyAppointments.map((appt) => {
     const interview = getInterview(state, appt.interview);
-    console.log(appt);
+    const interviewers = getInterviewersForDay(state, state.day);
+
     return (
-      <Appointment key={appt.id} id={appt.id} time={appt.time} interview={interview} interviewers={interviewers} />
+      <Appointment
+        key={appt.id}
+        id={appt.id}
+        time={appt.time}
+        interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+      />
     );
   });
-
-  const setDay = (day) => setState({ ...state, day });
-
-  const baseUrl = "http://localhost:8002/api/";
-
-  useEffect(() => {
-    Promise.all([
-      axios.get(`${baseUrl}days`),
-      axios.get(`${baseUrl}appointments`),
-      axios.get(`${baseUrl}interviewers`),
-    ]).then(([days, appointments, interviewers]) => {
-      setState((prev) => ({
-        ...prev,
-        days: days.data,
-        appointments: appointments.data,
-        interviewers: interviewers.data,
-      }));
-    });
-  }, []);
 
   return (
     <main className="layout">
