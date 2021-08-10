@@ -56,6 +56,7 @@ const fixtures = {
 };
 
 console.log("axios test");
+console.log(fixtures.days);
 export default {
   // defaults: { baseURL: "" },
   get: jest.fn((url) => {
