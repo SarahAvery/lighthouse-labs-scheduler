@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+// const axios = require("axios");
 
 function useApplicationData() {
   const baseUrl = "http://localhost:8002/api/";
@@ -17,7 +18,6 @@ function useApplicationData() {
     const currentDayObjIndex = state.days.findIndex((dayObj) => dayObj.name === currentDay);
 
     const listOfApptIds = currentDayObj.appointments;
-    console.log("listOfApptIds ", listOfApptIds);
 
     const listOfFreeAppts = listOfApptIds.filter((apptId) => !state.appointments[apptId].interview);
 
@@ -30,9 +30,8 @@ function useApplicationData() {
     updatedDay.spots = newSpots;
 
     updatedState.days[currentDayObjIndex] = updatedDay;
-    console.log(updatedState.days);
 
-    return updatedState.days;
+    return updatedState;
   }
 
   function bookInterview(id, interview) {
@@ -44,41 +43,41 @@ function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    const days = updateSpots(state, state.day);
     return axios
       .put(`${baseUrl}appointments/${id}`, { interview })
-      .then(() => setState({ ...state, appointments, days }));
+      .then(() => setState(updateSpots({ ...state, appointments })));
   }
-
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
       interview: null,
     };
-    const days = updateSpots(state, state.day);
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
     return axios.delete(`${baseUrl}appointments/${id}`).then(() => {
-      setState({ ...state, appointment, days });
+      setState(updateSpots({ ...state, appointments }));
     });
   }
 
   const setDay = (day) => setState({ ...state, day });
 
   useEffect(() => {
-    Promise.all([
-      axios.get(`${baseUrl}days`),
-      axios.get(`${baseUrl}appointments`),
-      axios.get(`${baseUrl}interviewers`),
-    ]).then(([days, appointments, interviewers]) => {
-      setState((prev) => ({
-        ...prev,
-        days: days.data,
-        appointments: appointments.data,
-        interviewers: interviewers.data,
-      }));
-    });
+    Promise.all([axios.get(`/api/days`), axios.get(`/api/appointments`), axios.get(`/api/interviewers`)]).then(
+      (res) => {
+        const [days, appointments, interviewers] = res;
+        console.log(res);
+        setState((prev) => ({
+          ...prev,
+          days: days.data,
+          appointments: appointments.data,
+          interviewers: interviewers.data,
+        }));
+      }
+    );
   }, []);
 
-  console.log("state ", state);
   return {
     state,
     setDay,

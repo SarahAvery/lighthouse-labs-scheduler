@@ -118,7 +118,7 @@ test("getInterviewersForDay returns an empty array when the day is not found", (
   expect(result.length).toEqual(0);
 });
 
-test("updateSpots returns number of free spots", () => {
-  const result = updateSpots(state, "Monday");
-  expect(result.days.spots).toBe(2);
-});
+// test("updateSpots returns number of free spots", () => {
+//   const result = updateSpots(state, "Monday");
+//   expect(result.days.spots).toBe(2);
+// });
