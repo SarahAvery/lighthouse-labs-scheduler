@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/code-frame": "^7.14.5",
     "@testing-library/react-hooks": "^7.0.1",
     "axios": "^0.21.1",
+    "babel": "^6.23.0",
     "classnames": "^2.3.1",
     "normalize.css": "^8.0.1",
     "react": "^16.9.0",
@@ -20,10 +22,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
-   
   },
   "proxy": "http://localhost:8002",
-
   "browserslist": {
     "production": [
       ">0.2%",
