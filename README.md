@@ -24,9 +24,15 @@ This project was built based on TDD, with the use of Jest (v 4.0.0) and React Te
 
 ### Daily Schedule View
 
+!["Daily View"](https://github.com/SarahAvery/lighthouse-labs-scheduler/blob/master/docs/images/daily-view.png?raw=true)
+
 ### Booking an Appointment
 
+!["Booking an Appointment"](https://github.com/SarahAvery/lighthouse-labs-scheduler/blob/master/docs/images/add-appointment.png?raw=true)
+
 ### Deleting Appointment
+
+!["Deleting an Appointment"](https://github.com/SarahAvery/lighthouse-labs-scheduler/blob/master/docs/images/delete-appointment.png?raw=true)
 
 ## Setup
 
