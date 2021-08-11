@@ -65,9 +65,7 @@ function useApplicationData() {
 
   useEffect(() => {
     Promise.all([axios.get(`/api/days`), axios.get(`/api/appointments`), axios.get(`/api/interviewers`)]).then(
-      (res) => {
-        const [days, appointments, interviewers] = res;
-        console.log(res);
+      ([days, appointments, interviewers]) => {
         setState((prev) => ({
           ...prev,
           days: days.data,

@@ -74,22 +74,22 @@ const Appointment = (props) => {
           />
         )}
         {mode === CONFIRMING && (
-          <Confirm onConfirm={() => deleting()} onCancel={back} message="Are you sure you want to delete?" />
+          <Confirm onConfirm={() => deleting()} onCancel={back} message="Are you sure you would like to delete?" />
         )}
-        {mode === DELETING && <Status message="deleting" />}
-        {mode === SAVING && <Status message="saving" />}
+        {mode === DELETING && <Status message="Deleting" />}
+        {mode === SAVING && <Status message="Saving" />}
         {mode === CREATE && <Form interviewers={props.interviewers} onCancel={back} onSave={save} />}
         {mode === EDIT && (
           <Form
             interviewers={props.interviewers}
             interviewer={props.interview.interviewer.id}
             name={props.interview.student}
-            onCancel={back}
+            onCancel={() => transition(SHOW)}
             onSave={save}
           />
         )}
-        {mode === ERROR_SAVE && <Error message="Error occured while trying to save" onClose={back} />}
-        {mode === ERROR_DELETE && <Error message="Error occured while trying to delete" onClose={back} />}
+        {mode === ERROR_SAVE && <Error message="Error occured while trying to save" onClose={editing} />}
+        {mode === ERROR_DELETE && <Error message="Error occured while trying to delete" onClose={editing} />}
       </Fragment>
     </article>
   );

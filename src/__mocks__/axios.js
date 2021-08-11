@@ -53,16 +53,10 @@ const fixtures = {
   },
 };
 
-console.log("axios test");
-console.log(fixtures.days);
 export default {
-  // defaults: { baseURL: "" },
-  get: jest.fn((url) => {
-    console.log("days");
-
+  defaults: { baseURL: "" },
+  get: (url) => {
     if (url === "/api/days") {
-      console.log("in days");
-
       return Promise.resolve({
         status: 200,
         statusText: "OK",
@@ -87,5 +81,13 @@ export default {
         data: fixtures.interviewers,
       });
     }
-  }),
+  },
+  put: (url, data) => {
+    console.log(url, data);
+    return Promise.resolve({ status: 204, statusText: "No Content" });
+  },
+  delete: (url, data) => {
+    console.log(url, data);
+    return Promise.resolve({ status: 204, statusText: "No Content" });
+  },
 };
