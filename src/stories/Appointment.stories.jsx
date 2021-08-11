@@ -7,7 +7,6 @@ import StatusAppointment from "../components/Appointment/Status";
 import ErrorAppointment from "../components/Appointment/Error";
 import FormElement from "../components/Appointment/Form";
 import React, { Fragment } from "react";
-// import { action } from "@storybook/addon-actions";
 
 export default {
   title: "Appointment",
@@ -35,7 +34,6 @@ const interviewers = [
 ];
 
 const Template = (args) => <Appointment {...args} />;
-// export const FullAppointment = Template.bind({});
 
 export const Time = Template.bind({});
 Time.args = {

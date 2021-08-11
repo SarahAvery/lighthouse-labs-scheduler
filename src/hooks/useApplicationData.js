@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// const axios = require("axios");
 
 function useApplicationData() {
   const baseUrl = "http://localhost:8002/api/";

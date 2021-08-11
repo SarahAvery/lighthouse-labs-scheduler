@@ -27,13 +27,9 @@ const DayListItem = (props) => {
 };
 
 DayListItem.propTypes = {
-  /** the name of the day */
   name: PropTypes.string,
-  /** the number of spots remaining */
   spots: PropTypes.number,
-  /** true or false declaring that this day is selected */
   selected: PropTypes.bool,
-  /** accepts the name of the day eg. "Monday", "Tuesday" */
   setDay: PropTypes.func,
 };
 

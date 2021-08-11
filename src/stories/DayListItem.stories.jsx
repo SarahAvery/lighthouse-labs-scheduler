@@ -1,5 +1,4 @@
 import DayListItem from "components/DayListItem";
-// import { action } from "@storybook/addon-actions";
 
 export default {
   title: "DayListItem",
