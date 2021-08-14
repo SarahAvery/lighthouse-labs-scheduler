@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function useApplicationData() {
-  const baseUrl = "http://localhost:8002/api/";
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -43,7 +41,7 @@ function useApplicationData() {
       [id]: appointment,
     };
     return axios
-      .put(`${baseUrl}appointments/${id}`, { interview })
+      .put(`/api/appointments/${id}`, { interview })
       .then(() => setState(updateSpots({ ...state, appointments })));
   }
   function cancelInterview(id) {
@@ -55,7 +53,7 @@ function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    return axios.delete(`${baseUrl}appointments/${id}`).then(() => {
+    return axios.delete(`/api/appointments/${id}`).then(() => {
       setState(updateSpots({ ...state, appointments }));
     });
   }

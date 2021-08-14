@@ -21,7 +21,6 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 const Appointment = (props) => {
-  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
   function save(name, interviewer) {
     transition(SAVING);
     const interview = {
@@ -31,9 +30,7 @@ const Appointment = (props) => {
     props
       .bookInterview(props.id, interview)
       .then((response) => {
-        setTimeout(() => {
-          transition(SHOW);
-        }, 1000);
+        transition(SHOW);
       })
       .catch((error) => {
         transition(ERROR_SAVE, true);
@@ -45,9 +42,7 @@ const Appointment = (props) => {
     props
       .cancelInterview(props.id)
       .then((response) => {
-        setTimeout(() => {
-          transition(EMPTY);
-        }, 1000);
+        transition(EMPTY);
       })
       .catch((error) => transition(ERROR_DELETE, true));
   }
@@ -59,6 +54,7 @@ const Appointment = (props) => {
   function editing() {
     transition(EDIT);
   }
+  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
   return (
     <article className="appointment" data-testid="appointment">
@@ -88,7 +84,7 @@ const Appointment = (props) => {
             onSave={save}
           />
         )}
-        {mode === ERROR_SAVE && <Error message="Error occured while trying to save" onClose={editing} />}
+        {mode === ERROR_SAVE && <Error message="Error occured while trying to save" onClose={back} />}
         {mode === ERROR_DELETE && <Error message="Error occured while trying to delete" onClose={editing} />}
       </Fragment>
     </article>
